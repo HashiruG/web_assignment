@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/ecom');
+mongoose.connect('mongodb+srv://hashiru:X64LtSUDWTqCU5rN@cluster0.02jfgy5.mongodb.net/ecom');
 
 const ecomSchema = new mongoose.Schema({
     itemName: String,  
@@ -21,8 +21,14 @@ const ecomSchema = new mongoose.Schema({
     image:String
 });
 
+const UserSchema = new mongoose.Schema({
+    email: String,
+    password: String
+    })
+
 const Phone = mongoose.model("Phone", ecomSchema);
 const Laptop = mongoose.model("Laptop", ecomSchema);
+const User = mongoose.model("User", UserSchema);
 
 
 async function addPhones(){
@@ -74,7 +80,7 @@ async function addPhones(){
     }
 }
 
-addPhones();
+// addPhones();
 
 async function addLaptops(){
     try {
@@ -111,7 +117,7 @@ async function addLaptops(){
     }
 }
 
-addLaptops();
+// addLaptops();
 
 app.get('/', (req, res) => {
     res.render("home");
@@ -119,6 +125,22 @@ app.get('/', (req, res) => {
 
 app.get('/signup', (req, res) => {
     res.render("signup");
+})
+
+app.post('/signup', async(req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = new User({
+        email: email,
+        password: password
+    }); 
+    try {
+        await user.save();
+        console.log("User saved to database");
+    } catch (error) {
+        console.log(error);
+    }
+    res.redirect("/");
 })
 
 app.get("/phones", async(req, res) => {
