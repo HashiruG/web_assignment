@@ -1,0 +1,49 @@
+
+
+.signup{
+    margin-left: 30px;
+}
+
+.container{
+    margin: 0px;
+    width: 100%;
+}
+
+#testimonials{
+    text-align: center;
+    background-color: #31363F;
+    color: #ffff;
+  }
+  
+  .testimonial-text{
+    padding: 7% 15% 0% 15%;
+  }
+  
+  .testimonial-image{
+    width: 6%;
+    border-radius: 50%;
+    margin:20px;
+  
+  }
+
+
+  .card-row{
+    padding: 40px 4px 20px 4px;
+  }
+
+  .card-rows{
+    width: 80%;
+  }
+
+  .card{
+    margin: 3px;
+  }
+
+  .card-img{
+    height: 50%;
+    margin-top: 15px;
+  }
+
+  .form-div{
+    margin-top: 70px;
+  }
