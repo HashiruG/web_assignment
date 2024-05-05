@@ -21,12 +21,13 @@ const ecomSchema = new mongoose.Schema({
     image:String
 });
 
-const Ecom = mongoose.model("Ecom", ecomSchema);
+const Phone = mongoose.model("Phone", ecomSchema);
+const Laptop = mongoose.model("Laptop", ecomSchema);
 
 
-async function addItems(){
+async function addPhones(){
     try {
-        await Ecom.insertMany([
+        await Phone.insertMany([
             {
                 itemName: "iphone 11",
                 price: 149000,
@@ -73,7 +74,44 @@ async function addItems(){
     }
 }
 
-// addItems();
+addPhones();
+
+async function addLaptops(){
+    try {
+        await Laptop.insertMany([
+            {
+                itemName: "Macbook Air M2",
+                price: 380000,
+                image: "https://appleasia.lk/wp-content/uploads/2023/07/Untitled-design-4-430x430.png"
+            },
+            {
+                itemName: "Macbook Air M1",
+                price: 260000,
+                image: "https://appleasia.lk/wp-content/uploads/2023/04/Apple-MacBook-Air-M1-Silver-Latest-Price-In-Sri-Lanka-1-430x430.webp"
+            },
+            {
+                itemName: "Macbook Air M3",
+                price: 504000,
+                image: "https://appleasia.lk/wp-content/uploads/2024/01/M3-CHIP-14inch-Silver-4-430x430.jpg"
+            },
+            {
+                itemName: "Macbook M1 Pro",
+                price: 539000,
+                image: "https://appleasia.lk/wp-content/uploads/2023/04/MacBook-Pro-14inch-Space-Grey-2021-Apple-Asia-2-430x430.webp"
+            },
+            {
+                itemName: "Macbook M2 Pro",
+                price: 689000,
+                image: "https://appleasia.lk/wp-content/uploads/2023/04/MacBook-Pro-14inch-Silver-2023-Apple-Asia-1-430x430.webp"
+            }
+            
+        ])
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+addLaptops();
 
 app.get('/', (req, res) => {
     res.render("home");
@@ -84,13 +122,22 @@ app.get('/signup', (req, res) => {
 })
 
 app.get("/phones", async(req, res) => {
-    const items = await Ecom.find({});
+    const items = await Phone.find({});
     console.log(items);
-    res.render("products", {IL1:items[0].image, IL2:items[1].image, IL3:items[2].image, IL4:items[3].image, IL5:items[4].image, IL6:items[5].image, IL7:items[6].image, IL8:items[7].image, 
+    res.render("phones", {IL1:items[0].image, IL2:items[1].image, IL3:items[2].image, IL4:items[3].image, IL5:items[4].image, IL6:items[5].image, IL7:items[6].image, IL8:items[7].image, 
         IN1:items[0].itemName, IN2:items[1].itemName, IN3:items[2].itemName, IN4:items[3].itemName, IN5:items[4].itemName, IN6:items[5].itemName, IN7:items[6].itemName, IN8:items[7].itemName,
         IP1:items[0].price, IP2:items[1].price, IP3:items[2].price, IP4:items[3].price, IP5:items[4].price, IP6:items[5].price, IP7:items[6].price, IP8:items[7].price
      });      
     });
+
+app.get("/laptops", async(req, res) => {
+    const items = await Laptop.find({});
+    console.log(items);
+    res.render("laptops", {IL1:items[0].image, IL2:items[1].image, IL3:items[2].image, IL4:items[3].image, IL5:items[4].image, 
+            IN1:items[0].itemName, IN2:items[1].itemName, IN3:items[2].itemName, IN4:items[3].itemName, IN5:items[4].itemName, 
+            IP1:items[0].price, IP2:items[1].price, IP3:items[2].price, IP4:items[3].price, IP5:items[4].price
+        });      
+    });    
 
 
 
