@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 
-mongoose.connect('mongodb+srv://hashiru:X64LtSUDWTqCU5rN@cluster0.02jfgy5.mongodb.net/ecom');
+mongoose.connect('mongodb+srv://hashiru:J9HorhRpsetxLxIK@cluster0.02jfgy5.mongodb.net/ecom');
 
 const ecomSchema = new mongoose.Schema({
     itemName: String,  
