@@ -1,7 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
+const Laptop = require('./laptop.js');
+const Phone = require('./phone.js');
+const User = require('./user.js');
 
 
 const app = express();
@@ -11,25 +13,6 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-
-
-mongoose.connect('mongodb+srv://hashiru:J9HorhRpsetxLxIK@cluster0.02jfgy5.mongodb.net/ecom');
-
-const ecomSchema = new mongoose.Schema({
-    itemName: String,  
-    price:Number,
-    image:String
-});
-
-const UserSchema = new mongoose.Schema({
-    email: String,
-    password: String
-    })
-
-const Phone = mongoose.model("Phone", ecomSchema);
-const Laptop = mongoose.model("Laptop", ecomSchema);
-const User = mongoose.model("User", UserSchema);
-
 
 async function addPhones(){
     try {
