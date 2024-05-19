@@ -8,4 +8,5 @@ const ecomSchema = new mongoose.Schema({
 
 const Phone = mongoose.model("Phone", ecomSchema);
 
+
 module.exports = Phone;

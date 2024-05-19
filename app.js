@@ -1,9 +1,15 @@
+require('dotenv').config()  
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
+const session = require('express-session');
+const passportLocalMongoose = require('passport-local-mongoose');
+const passport = require('passport');
 const Laptop = require('./laptop.js');
 const Phone = require('./phone.js');
 const User = require('./user.js');
+
+
 
 
 const app = express();
@@ -13,6 +19,21 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+  }))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 async function addPhones(){
     try {
@@ -111,19 +132,22 @@ app.get('/signup', (req, res) => {
 })
 
 app.post('/signup', async(req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    const user = new User({
-        email: email,
-        password: password
-    }); 
-    try {
-        await user.save();
-        console.log("User saved to database");
-    } catch (error) {
-        console.log(error);
-    }
-    res.redirect("/");
+    User.register({username:req.body.email, active: false}, req.body.password, function(err, user) {
+        if (err) {
+            console.log(err);
+        }
+      
+        const authenticate = User.authenticate();
+        authenticate(req.body.email, req.body.password, function(err, result) {
+          if (err) {
+            console.log(err);
+          }else{
+            res.redirect('/phones');
+          }
+      
+         
+        });
+      });
 })
 
 app.get("/phones", async(req, res) => {
